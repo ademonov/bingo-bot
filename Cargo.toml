@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["Andrew Demonov"]
 
 [dependencies]
+log = "0.3"
+log4rs = "0.5"

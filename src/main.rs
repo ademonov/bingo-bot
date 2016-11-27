@@ -1,3 +1,13 @@
+#[macro_use]
+extern crate log;
+extern crate log4rs;
+
+mod logger; 
+
+
 fn main() {
-    println!("Hello, world!");
-}
+    logger::init();
+    info!("Starting...");
+    
+
+} 
