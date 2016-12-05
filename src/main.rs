@@ -5,6 +5,7 @@ extern crate hyper;
 
 mod logger; 
 mod http;
+mod bingo;
 
 fn main() {
     logger::init();
