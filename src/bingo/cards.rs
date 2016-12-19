@@ -1,3 +1,4 @@
+use std::iter::Iterator;
 use time::{Tm, now_utc};
 use formatting::{Format, FormatProvider};
 
@@ -28,6 +29,32 @@ impl<'a> CardCell<'a> {
      }
 }
 
+pub struct Card<'a> {
+    created: Tm,
+    cells: [[CardCell<'a>; COL_COUNT]; ROW_COUNT]
+}
+
+impl<'a> Card<'a> {
+    pub fn new<I>(word_iter: I) -> Card<'a> where I: Iterator<Item=&'a str> {
+        Card { created: now_utc(), cells: fill_cells(word_iter) }
+    }
+}
+
+fn fill_cells<'a, I>(word_iter: I) -> [[CardCell<'a>; COL_COUNT]; ROW_COUNT] where I: Iterator<Item=&'a str> {
+    let mut result = [[CardCell::new("(none)"); COL_COUNT]; ROW_COUNT];
+    let mut word_vec = word_iter.collect::<Vec<_>>();
+
+    for row in 0..ROW_COUNT {
+        for col in 0..COL_COUNT {
+            let vector_index = (word_vec.len() - 1) / 2; // use random here
+            let word = word_vec.remove(vector_index);
+            result[row][col] = CardCell::new(word);
+        }
+    }
+
+    result
+}
+
 impl<'a> Format for CardCell<'a> {
     fn format(&self, fp: &FormatProvider) -> String {
         let word = self.get_word();
@@ -40,27 +67,15 @@ impl<'a> Format for CardCell<'a> {
     }
 }
 
-pub struct Card<'a> {
-    created: Tm,
-    cells: [[CardCell<'a>; COL_COUNT]; ROW_COUNT]
-}
+impl<'a> Format for Card<'a> {
+    fn format(&self, fp: &FormatProvider) -> String {
 
-fn fill_cells<'a>() -> [[CardCell<'a>; COL_COUNT]; ROW_COUNT] {
-    let mut result = [[CardCell::new("(none)"); COL_COUNT]; ROW_COUNT];
-    
-    /*
-    for row in 0..ROW_COUNT {
-        for col in 0..COL_COUNT {
-            result[row][col] = CardCell::new("0x0");
-        }
-    }
-    */
-    
-    result
-}
+        // for row in 0..ROW_COUNT {
+        //     for col in 0..COL_COUNT {
+        //         self.cells[row][col]
+        //     }
+        // }
 
-impl<'a> Card<'a> {
-    pub fn new() -> Card<'a> {
-        Card { created: now_utc(), cells: fill_cells() }
+        unimplemented!();
     }
 }

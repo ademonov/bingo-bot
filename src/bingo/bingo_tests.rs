@@ -9,17 +9,22 @@ fn bingo_tests_works() {
 fn cardcell_new() {
     let c = cards::CardCell::new("something");
 
-    assert_eq!(false, c.IsChecked()); 
-    assert_eq!("something", c.GetWord());
-    assert_ne!("somethingelse", c.GetWord());
+    assert_eq!(false, c.is_checked());
+    assert_eq!("something", c.get_word());
+    assert_ne!("somethingelse", c.get_word());
 }
 
 #[test]
 fn cardcell_check() {
     let mut c = cards::CardCell::new("something");
 
-    c.Check();
+    c.check();
 
-    assert_eq!(true, c.IsChecked()); 
-    assert_eq!("something", c.GetWord());
+    assert_eq!(true, c.is_checked());
+    assert_eq!("something", c.get_word());
+}
+
+#[test]
+fn card_new() {
+    let c = cards::Card::new();
 }
