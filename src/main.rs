@@ -6,6 +6,7 @@ extern crate time;
 
 mod logger; 
 mod http;
+mod formatting;
 mod bingo;
 
 fn main() {

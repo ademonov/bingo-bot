@@ -1,4 +1,5 @@
 use time::{Tm, now_utc};
+use formatting::{Format, FormatProvider};
 
 pub const ROW_COUNT: usize = 5;
 pub const COL_COUNT: usize = 5;
@@ -14,17 +15,29 @@ impl<'a> CardCell<'a> {
          CardCell { word: word, checked: false }
      } 
 
-     pub fn GetWord(&self) -> &'a str {
+     pub fn get_word(&self) -> &'a str {
          self.word
      }
 
-     pub fn IsChecked(&self) -> bool {
+     pub fn is_checked(&self) -> bool {
          self.checked
      }
 
-     pub fn Check(&mut self) {
+     pub fn check(&mut self) {
          self.checked = true;
      }
+}
+
+impl<'a> Format for CardCell<'a> {
+    fn format(&self, fp: &FormatProvider) -> String {
+        let word = self.get_word();
+
+        if self.is_checked() {
+            fp.get_strikethrough(word)
+        } else {
+            String::from(word)
+        }
+    }
 }
 
 pub struct Card<'a> {
@@ -33,7 +46,7 @@ pub struct Card<'a> {
 }
 
 fn fill_cells<'a>() -> [[CardCell<'a>; COL_COUNT]; ROW_COUNT] {
-    let mut result = [[CardCell::new("0x0"); COL_COUNT]; ROW_COUNT];
+    let mut result = [[CardCell::new("(none)"); COL_COUNT]; ROW_COUNT];
     
     /*
     for row in 0..ROW_COUNT {
