@@ -10,11 +10,11 @@ pub trait Format {
 pub struct GitterMdFormatProvider;
 
 impl FormatProvider for GitterMdFormatProvider {
-     fn get_strikethrough(&self, s: &str) -> String {
-         format!("~~{}~~", s)
-     }
+    fn get_strikethrough(&self, s: &str) -> String {
+        format!("~~{}~~", s)
+    }
 
-     fn get_newline(&self) -> String {
-         format!("\n")
-     }
+    fn get_newline(&self) -> String {
+        format!("\n")
+    }
 }

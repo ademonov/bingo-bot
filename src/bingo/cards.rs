@@ -12,21 +12,21 @@ pub struct CardCell<'a> {
 }
 
 impl<'a> CardCell<'a> {
-     pub fn new(word: &'a str) -> CardCell<'a> {
-         CardCell { word: word, checked: false }
-     } 
+    pub fn new(word: &'a str) -> CardCell<'a> {
+        CardCell { word: word, checked: false }
+    }
 
-     pub fn get_word(&self) -> &'a str {
-         self.word
-     }
+    pub fn get_word(&self) -> &'a str {
+        self.word
+    }
 
-     pub fn is_checked(&self) -> bool {
-         self.checked
-     }
+    pub fn is_checked(&self) -> bool {
+        self.checked
+    }
 
-     pub fn check(&mut self) {
-         self.checked = true;
-     }
+    pub fn check(&mut self) {
+        self.checked = true;
+    }
 }
 
 pub struct Card<'a> {
@@ -35,12 +35,12 @@ pub struct Card<'a> {
 }
 
 impl<'a> Card<'a> {
-    pub fn new<I>(word_iter: I) -> Card<'a> where I: Iterator<Item=&'a str> {
+    pub fn new<I>(word_iter: I) -> Card<'a> where I: Iterator<Item = &'a str> {
         Card { created: now_utc(), cells: fill_cells(word_iter) }
     }
 }
 
-fn fill_cells<'a, I>(word_iter: I) -> [[CardCell<'a>; COL_COUNT]; ROW_COUNT] where I: Iterator<Item=&'a str> {
+fn fill_cells<'a, I>(word_iter: I) -> [[CardCell<'a>; COL_COUNT]; ROW_COUNT] where I: Iterator<Item = &'a str> {
     let mut result = [[CardCell::new("(none)"); COL_COUNT]; ROW_COUNT];
     let mut word_vec = word_iter.collect::<Vec<_>>();
 
@@ -69,13 +69,19 @@ impl<'a> Format for CardCell<'a> {
 
 impl<'a> Format for Card<'a> {
     fn format(&self, fp: &FormatProvider) -> String {
+        let mut result = String::new();
+        result.push_str(format!("Created: {}", self.created.asctime()).as_str());
 
-        // for row in 0..ROW_COUNT {
-        //     for col in 0..COL_COUNT {
-        //         self.cells[row][col]
-        //     }
-        // }
+        for row in 0..ROW_COUNT {
+            result.push_str(fp.get_newline().as_str());
+            for col in 0..COL_COUNT {
+                if col != 0 {
+                    result.push_str(", ");
+                }
+                result.push_str(self.cells[row][col].format(fp).as_str());
+            }
+        }
 
-        unimplemented!();
+        result
     }
 }
