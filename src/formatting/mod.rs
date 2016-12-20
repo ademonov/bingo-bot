@@ -9,6 +9,12 @@ pub trait Format {
 
 pub struct GitterMdFormatProvider;
 
+impl GitterMdFormatProvider {
+    pub fn new() -> GitterMdFormatProvider{
+        GitterMdFormatProvider
+    }
+}
+
 impl FormatProvider for GitterMdFormatProvider {
     fn get_strikethrough(&self, s: &str) -> String {
         format!("~~{}~~", s)
