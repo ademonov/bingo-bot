@@ -35,12 +35,16 @@ pub struct Card<'a> {
 }
 
 impl<'a> Card<'a> {
-    pub fn new<I>(word_iter: I) -> Card<'a> where I: Iterator<Item = &'a str> {
+    pub fn new<I>(word_iter: I) -> Card<'a> where I: Iterator<Item = &'a &'a str> {
         Card { created: now_utc(), cells: fill_cells(word_iter) }
+    }
+
+    pub fn check_cell(&mut self, row: usize, col: usize) {
+        self.cells[row][col].check();
     }
 }
 
-fn fill_cells<'a, I>(word_iter: I) -> [[CardCell<'a>; COL_COUNT]; ROW_COUNT] where I: Iterator<Item = &'a str> {
+fn fill_cells<'a, I>(word_iter: I) -> [[CardCell<'a>; COL_COUNT]; ROW_COUNT] where I: Iterator<Item = &'a &'a str> {
     let mut result = [[CardCell::new("(none)"); COL_COUNT]; ROW_COUNT];
     let mut word_vec = word_iter.collect::<Vec<_>>();
 
