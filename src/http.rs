@@ -8,15 +8,16 @@ pub fn listening(url: &str) {
    listener.handle(handle_proc).unwrap();
 }
 
-fn handle_proc(req: Request, res: Response) {
+fn handle_proc(req: Request, mut res: Response) {
     let mut s_buf:String;
     match (req.method, req.uri) {
         (Method::Get, RequestUri::AbsolutePath(ref s)) => {
-            s_buf = format!("{}", s.to_owned());
+            s_buf = format!("{}", s);
         }
-        (_, _) => {
-            s_buf = String::from("404 Not found!");
-            res.status_mut = StatusCode::NotFound;
+        (method, uri) => {
+            trace!("Invalid request: {} {}", method, uri);
+            s_buf = String::from("Not found!");
+            *res.status_mut() = StatusCode::NotFound;
         }
     }
     let buf = s_buf.as_bytes();
