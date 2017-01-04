@@ -1,6 +1,5 @@
 pub mod cards;
-
-
+pub mod words;
 
 #[cfg(test)]
 mod bingo_tests;

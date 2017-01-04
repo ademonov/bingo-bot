@@ -1,5 +1,5 @@
 use hyper::method::Method;
-use hyper::server::{Server, Request, Response, Listening};
+use hyper::server::{Server, Request, Response};
 use hyper::status::StatusCode;
 use hyper::uri::RequestUri;
 
