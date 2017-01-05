@@ -5,11 +5,13 @@ pub fn split<'a, I>(s: &'a str) -> I where I: Iterator<Item = &'a &'a str> {
 
 pub struct Word {
     title: String,
-    words: Vec<String>
+    synonyms: Vec<String>
 }
 
 impl Word {
-     fn new() -> Word {
-         unimplemented!()
+     pub fn new(title: &str, synonyms: Vec<&str>) -> Word {
+         Word { 
+             title: title.to_owned(), 
+             synonyms: synonyms.iter().map(|&s|s.to_owned()).collect::<Vec<_>>() }
      }
 }
