@@ -14,8 +14,10 @@ fn main() {
     logger::init();
     info!("Starting...");
 
-    let format_provider = formatting::GitterMdFormatProvider::new();
+    config::load_words();
 
-    http::listening("0.0.0.0:8181");
+    // let format_provider = formatting::GitterMdFormatProvider::new();
+
+    // http::listening("0.0.0.0:8181");
     info!("Done.");
 } 
