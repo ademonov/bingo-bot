@@ -1,4 +1,4 @@
 # bingo-bot
 Bingo-bot
-# Команды
+# Commands
 bb start - creates a new card for user
